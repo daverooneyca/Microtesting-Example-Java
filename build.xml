@@ -27,7 +27,7 @@
     <target name="clean">
     	<delete>
 			<fileset dir="bin">
-			    <include name="**/*"/>
+			    <include name="**/*.class"/>
 			</fileset>
 		</delete>
         <delete dir="${junit.output.dir}"/>
