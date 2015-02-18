@@ -1,0 +1,13 @@
+### Eclipse ###
+.metadata
+bin/
+tmp/
+.settings/
+.loadpath
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
