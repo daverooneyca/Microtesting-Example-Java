@@ -1,0 +1,52 @@
+Agenda
+======
+
+0) Intro
+
+
+Arrange, Act, Assert
+
+Extract and Override
+
+
+1) Basic read tests:
+    - getAllProducts should return 100 rows
+    - getInStockProducts should return 90 rows
+    - getProductById for a known good ID should return the product with that ID
+    - getProductById for a know 'bad' ID should return null
+
+2) Test that create adds a new Product
+    - what happens to the other tests?
+
+3) Test that delete removes the specified Product
+    - what happens to the other tests?
+    - if the DB were shared & not local, could this aproach work?
+
+4) Refactor to move the CRUD methods into a repo class
+    - no change, Read tests still busted because of DB
+    - note that you can't override static methods
+
+5) Refactor repo to non-static methods
+    - create repo in Product constructor as field
+    - update tests to extract & override create & delete methods of repo
+      - validate the data passed & make the tests pass again
+
+6) Refactor read tests to use fake repo
+    - extract & override all repo methods
+      - show how dependency on javax.sql is gone & we're returning just a list
+      - we don't need the database for testing the Product class anymore!
+
+7) Extract repo interface
+    - update tests to use the interface rather than extract/override
+
+
+Advanced - Not today!
+=====================
+
+8) Introduce alternate data source using XML test data
+    - same interface, different repo implementation
+    - tests should still pass
+    - other data format can be useful for testing with small set
+
+9) Mocking with Mockito
+    - expectations that interface will be called in a certain way

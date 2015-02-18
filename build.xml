@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="test" name="Microtesting Example">
+	<property file="user.build.properties"/>
+	<property file="build.properties"/>
+	
+    <path id="build.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/mysql-connector-java-5.1.34-bin.jar"/>
+    </path>
+    <path id="test.classpath">
+        <fileset dir="lib-test">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <target name="init">
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src-test">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+    	<delete>
+			<fileset dir="bin">
+			    <include name="**/*"/>
+			</fileset>
+		</delete>
+        <delete dir="${junit.output.dir}"/>
+    </target>
+    <target name="build" depends="init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="src-test"/>
+            <classpath>
+            	<path refid="build.classpath"/>
+            	<path refid="test.classpath"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="test" depends="build">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <classpath>
+            	<path refid="build.classpath"/>
+            	<path refid="test.classpath"/>
+            </classpath>
+
+            <batchtest fork="yes" todir="${junit.output.dir}">
+                <fileset dir="src-test">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+    <target name="junitreport" depends="test">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
