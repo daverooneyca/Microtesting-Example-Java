@@ -1,6 +1,6 @@
 ### Eclipse ###
 .metadata
-bin/
+*.class
 tmp/
 .settings/
 .loadpath
